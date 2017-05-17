@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Http } from '@angular/http';
 
 @Component({
 	selector: 'app-root',
@@ -8,9 +9,21 @@ import { Component } from '@angular/core';
 export class AppComponent {
 
 	counter : number;
+	JSON : string;
 
-	constructor() {
-		console.log("entrando no construtor do main");
+	constructor(http : Http) {
+
+		let url = 'https://meu-site-5f4d8.firebaseio.com/.json';
+
+		http
+			.get(url)
+			.map(res => res.json())
+			.subscribe(json => {
+				this.JSON = JSON.stringify(json);
+				console.log(this.JSON);
+			});
+
+		console.log("entrando no construtor do main3");
 		this.counter = 1;
 	}
 
